@@ -1,0 +1,28 @@
+<div class="jumbotron">
+  <h1>Movies Farm</h1>
+</div>
+
+<div class="row">
+  <% @movies.each do |movie| %>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <table>
+          <thead>
+            <tr>
+              <th width="15%">Title</th>
+              <th width="15%">Year</th>
+              <th width="30%">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= movie.title %></td>
+              <td><%= movie.year %></td>
+              <td><%= movie.plot %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -10,3 +10,14 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
+gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'bootstrap_form'
+gem 'haml-rails'
+gem 'fabrication'
+gem 'faker'
+#retrive data from IMDB
+gem 'imdb', '~> 0.8'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+end

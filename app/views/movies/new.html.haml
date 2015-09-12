@@ -1,0 +1,9 @@
+= bootstrap_form_for(@movie, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-6") do |f|
+  %div
+    = f.text_field :title, label: "Title"
+    = f.number_field :year, label: "Year"
+    = f.text_area :plot, label: "Description"
+  %br
+  %div.actions.control-group.col-sm-offset-2
+    .controls
+      %input(type="submit" value="Add" class="btn btn-primary")
