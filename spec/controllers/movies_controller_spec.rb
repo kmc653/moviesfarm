@@ -49,4 +49,48 @@ describe MoviesController do
       end
     end
   end
+
+  describe "GET edit" do
+    it "set @movie" do
+      movie = Fabricate(:movie)
+      get :edit, id: movie.id
+      expect(assigns(:movie)).to be_instance_of(Movie)
+    end
+  end
+
+  describe "PATCH update" do
+    it "edit movie" do
+      movie = Fabricate(:movie)
+      patch :update, id: movie.id, movie: { title: "abc", year: 1234, plot: "asdf" }
+      expect(Movie.first.title).to eq("abc")
+    end
+    
+    it "redirects to home page" do
+      movie = Fabricate(:movie)
+      patch :update, id: movie.id, movie: { title: "abc", year: 1234, plot: "asdf" }
+      expect(response).to redirect_to movies_path
+    end
+    
+    it "show error if edit does not finish" do
+      movie = Fabricate(:movie)
+      patch :update, id: movie.id, movie: { title: "abc", year: 1234, plot: "" }
+      expect(flash[:error]).to eq("There are something wrong with your update.")
+    end
+  end
+
+  describe "DELETE destroy" do
+    let(:movie) { Fabricate(:movie) }
+    
+    before do 
+      delete :destroy, id: movie.id
+    end
+
+    it "redirects to movies page" do
+      expect(Movie.count).to eq(0)
+    end
+    
+    it "delete movie" do
+      expect(Movie.count).to eq(0)
+    end
+  end
 end
