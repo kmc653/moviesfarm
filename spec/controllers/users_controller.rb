@@ -25,14 +25,31 @@ describe UsersController do
       it "create a user " do
         expect(User.count).to eq(1)
       end
-      it "redirects to users page"
-      it "set flash success"
+      it "redirects to users page" do
+        expect(response).to redirect_to users_path
+      end
+      it "set flash success" do
+        expect(flash[:success]).to eq("You are registered.")
+      end
     end
     
     context "with invalid input" do
-      it ""
-      it ""
-      it ""
+      
+      before do
+        post :create, user: { password: 'password', full_name: 'Kevin Chang' }
+      end
+
+      it "does not create the user" do
+        expect(User.count).to eq(0)
+      end
+      
+      it "set @user" do
+        expect(assigns(:user)).to be_instance_of(User)
+      end
+
+      it "render new template" do
+        expect(response).to render_template :new 
+      end
     end
   end
 end
