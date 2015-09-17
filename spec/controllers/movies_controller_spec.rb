@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 describe MoviesController do
+  
+  before do
+    set_current_user
+  end
+
   describe "GET new" do
     it "sets the @movie to a new video" do
       get :new

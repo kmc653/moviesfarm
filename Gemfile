@@ -21,4 +21,6 @@ gem 'imdb', '~> 0.8'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
+  gem 'pry'
+  gem 'pry-nav'
 end

@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+  before_action :require_user
+
   def index
     @movies = Movie.all
   end
@@ -9,6 +11,7 @@ class MoviesController < ApplicationController
 
   def create
     @movie = Movie.create(movie_params)
+    @movie.creator = current_user
     if @movie.save
       flash[:success] = "You have successfully added the movie '#{@movie.title}'"
       redirect_to home_path
