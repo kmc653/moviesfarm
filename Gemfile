@@ -16,6 +16,7 @@ gem 'haml-rails'
 gem 'fabrication'
 gem 'faker'
 gem 'bcrypt', '~> 3.1.7'
+gem "paperclip", "~> 4.3"
 #retrive data from IMDB
 gem 'imdb', '~> 0.8'
 

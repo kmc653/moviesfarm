@@ -16,5 +16,9 @@
     = f.label :description
     %br
       = f.text_area :plot
-  .actions
-    = f.submit
+  .field
+    = f.label :image
+    %br
+      = f.file_field :image
+  %fieldset.form-group.action
+    %input(type="submit" value="Create" class="btn btn-default")

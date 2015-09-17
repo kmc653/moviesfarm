@@ -1,0 +1,20 @@
+.panel.panel-default
+  .panel-body
+    .row
+      .col-md-4
+        = image_tag @movie.image.url(:medium)
+        .table-responsive
+          %table.table
+            %tbody
+              %tr
+                %td
+                  %strong Title:
+                %td= @movie.title
+              %tr
+                %td
+                  %strong Year:
+                %td= @movie.year
+              %tr
+                %td
+                  %strong Description
+                %td= @movie.plot

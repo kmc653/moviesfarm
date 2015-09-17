@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe MoviesController do
   
+  let(:kevin) { Fabricate(:user) }
+
   before do
-    set_current_user
+    set_current_user(kevin)
   end
 
   describe "GET new" do
@@ -26,6 +28,10 @@ describe MoviesController do
       
       it "create a movie" do
         expect(Movie.count).to eq(1)
+      end
+
+      it "with creator id" do
+        expect(Movie.first.user_id).to eq(kevin.id)
       end
 
       it "sets flash success message" do

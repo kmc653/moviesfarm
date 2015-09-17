@@ -21,6 +21,10 @@ class MoviesController < ApplicationController
     end
   end
 
+  def show
+    @movie = Movie.where(id: params[:id]).first
+  end
+
   def edit
     @movie = Movie.find(params[:id])
   end
@@ -45,6 +49,6 @@ class MoviesController < ApplicationController
   private
 
   def movie_params
-    params.require(:movie).permit(:title, :year, :plot)
+    params.require(:movie).permit(:title, :year, :plot, :image)
   end
 end
