@@ -1,6 +1,11 @@
 %nav.navbar.navbar-default{:role => "navigation"}
   .container
     .navbar-header
+      %button.navbar-toggle.collapsed{"data-toggle" => "collapse", "data-target" => "#bs-example-navbar-collapse-1"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
       = link_to "MoviesFarm", home_path, class: "navbar-brand"
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav

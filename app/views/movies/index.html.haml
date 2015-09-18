@@ -1,0 +1,10 @@
+- if !logged_in?
+  .jumbotron
+    %h1 Share Your Favorite Movies
+    %p You can create movies you want to share and leave some reviews.
+    %p= link_to "Sign Up to share movies", register_path, class: "btn btn-primary btn-lg"
+.row
+  - @movies.each do |movie|
+    .col-sm-6.col-md-3
+      .thumbnail
+        = link_to (image_tag movie.image.url(:medium), class: 'image'), movie
