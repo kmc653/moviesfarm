@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   get '/logout' => 'sessions#destroy'
 
-  resources :movies
+  resources :movies do
+    resources :reviews, except: [:show, :index]
+  end
   resources :users, only: [:index, :create]
   resources :sessions, only: [:create]
-
 end

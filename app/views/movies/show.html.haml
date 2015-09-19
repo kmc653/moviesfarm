@@ -3,6 +3,8 @@
     .row
       .col-md-4
         = image_tag @movie.image.url(:medium)
+        .star-rating{"data-score" => "#{@avg_rating}"}
+        %em= "#{@reviews.length} reviews"
         .table-responsive
           %table.table
             %tbody
@@ -18,3 +20,26 @@
                 %td
                   %strong Description
                 %td= @movie.plot
+          = link_to "Write a review", new_movie_review_path(@movie)
+      .col-md-7.col-md-offset-1
+        %h1.review_title= @movie.title
+        %p= @movie.plot
+
+        - if @reviews.blank?
+          %h3 No reviews just yet, would you like to add the first!
+          = link_to "Write Review", new_movie_review_path(@movie), class: "btn btn-danger"
+        - else
+          - @reviews.each do |review|
+            .reviews
+              .star-rating{"data-score" => "#{review.rating}"}
+              %p= review.comment
+
+:javascript
+  $('.star-rating').raty({
+    path: '/assets',
+    number: 10,
+    readOnly: true,
+    score: function() {
+      return $(this).attr('data-score')
+    }
+  });
