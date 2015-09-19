@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  before_action :find_movie, only: [:edit, :update, :destroy, :upvote, :downvote]
   before_action :require_user, except: [:index, :show]
 
   def index
@@ -33,11 +34,9 @@ class MoviesController < ApplicationController
   end
 
   def edit
-    @movie = Movie.find(params[:id])
   end
 
   def update
-    @movie = Movie.find(params[:id])
     if @movie.update(movie_params)
       flash[:success] = "edit successfully!"
       redirect_to movies_path
@@ -48,12 +47,33 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
     @movie.destroy
     redirect_to movies_path
   end
 
+  def search
+    if params[:search].present?
+      @movies = Movie.search(params[:search])
+    else
+      @movies = Movie.all
+    end
+  end
+
+  def upvote
+    @movie.upvote_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @movie.downvote_by current_user
+    redirect_to :back
+  end
+
   private
+
+  def find_movie
+    @movie = Movie.find(params[:id])
+  end
 
   def movie_params
     params.require(:movie).permit(:title, :year, :plot, :image)

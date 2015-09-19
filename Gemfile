@@ -17,6 +17,8 @@ gem 'fabrication'
 gem 'faker'
 gem 'bcrypt', '~> 3.1.7'
 gem "paperclip", "~> 4.3"
+gem 'searchkick'
+gem 'acts_as_votable', '~> 0.10.0'
 #retrive data from IMDB
 gem 'imdb', '~> 0.8'
 

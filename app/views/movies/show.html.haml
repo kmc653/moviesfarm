@@ -20,6 +20,14 @@
                 %td
                   %strong Description
                 %td= @movie.plot
+              %tr
+                %td= pluralize(@movie.get_upvotes.size, "Like")
+                %td= pluralize(@movie.get_downvotes.size, "Dislike")
+
+          = link_to "Like", like_movie_path(@movie)
+          |
+          = link_to "Dislike", dislike_movie_path(@movie)
+          %br
           = link_to "Write a review", new_movie_review_path(@movie)
       .col-md-7.col-md-offset-1
         %h1.review_title= @movie.title
@@ -29,10 +37,21 @@
           %h3 No reviews just yet, would you like to add the first!
           = link_to "Write Review", new_movie_review_path(@movie), class: "btn btn-danger"
         - else
+          %h3 Reviews(#{@reviews.count})
           - @reviews.each do |review|
-            .reviews
-              .star-rating{"data-score" => "#{review.rating}"}
-              %p= review.comment
+            / %reviews
+            /   %span.star-rating{"data-score" => "#{review.rating}"}
+            /   %p= review.comment 
+            /   %p created by #{review.creator.full_name}
+            .table-responsive
+              %table.table
+              %tbody
+                %tr
+                  %td
+                    .star-rating{"data-score" => "#{review.rating}"}
+                    %p= review.comment 
+                    %p created by #{review.creator.full_name}
+              
 
 :javascript
   $('.star-rating').raty({
