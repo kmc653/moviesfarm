@@ -26,7 +26,7 @@ describe UsersController do
         expect(User.count).to eq(1)
       end
       it "redirects to users page" do
-        expect(response).to redirect_to users_path
+        expect(response).to redirect_to home_path
       end
       it "set flash success" do
         expect(flash[:success]).to eq("You are registered.")

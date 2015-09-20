@@ -1,16 +1,46 @@
 - if !logged_in?
-  .jumbotron
-    %h1 Share Your Favorite Movies
-    %p You can create movies you want to share and leave some reviews.
-    %p= link_to "Sign Up to share movies", register_path, class: "btn btn-primary btn-lg"
+  %p#intro
+    Share Your Favorite Movies
+    %br/
+    %span
+      You can create movies you want to share and leave some reviews.
+-else
+  %p#intro
+    Hello,
+    = current_user.full_name
+    %br/
+    %span
+      Share the movies that others would love them as well.
+
+/ #posts
+/   - @movies.each do |movie|
+/     .post
+/       .thumbnail
+/         = link_to (image_tag movie.image.url(:medium)), movie
+/       .post_content
+/         .title
+/           %h2= link_to movie.title, movie
+/         .data.clearfix
+/           %p.username
+/             Shared by
+/             = movie.creator.full_name
+/           %p.buttons
+/             %span
+/               %i.fa.fa-comments-o
+/               = movie.reviews.count
+/             %span
+/               %i.fa.fa-thumbs-o-up
+/               = movie.get_likes.size
+
 .row
   - @movies.each do |movie|
     .col-sm-6.col-md-3
       .thumbnail
         = link_to (image_tag movie.image.url(:medium), class: 'image'), movie
-        %p
-          = movie.reviews.count
-          = "Comment".pluralize(movie.reviews.count)
-        %p
-          = movie.get_likes.size
-          = "Like".pluralize(movie.get_likes.size)
+      %h3= link_to movie.title, movie
+      %p
+        Shared by
+        = movie.creator.full_name
+      %p
+        %span= pluralize(movie.reviews.count, "Review")
+        %span= pluralize(movie.get_likes.size, "Like")

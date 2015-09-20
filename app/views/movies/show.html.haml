@@ -20,38 +20,62 @@
                 %td
                   %strong Description
                 %td= @movie.plot
-              %tr
-                %td= pluralize(@movie.get_upvotes.size, "Like")
-                %td= pluralize(@movie.get_downvotes.size, "Dislike")
-
-          = link_to "Like", like_movie_path(@movie)
-          |
-          = link_to "Dislike", dislike_movie_path(@movie)
-          %br
-          = link_to "Write a review", new_movie_review_path(@movie)
       .col-md-7.col-md-offset-1
-        %h1.review_title= @movie.title
-        %p= @movie.plot
+        #post_show
+          .clearfix
+            .post_data
+              = link_to "Watch Trailer", "#{@movie.trailer_url}", :target => "_blank", class: "btn btn-default"
+              = link_to like_movie_path(@movie), method: :get, class: "data" do
+                %i.fa.fa-thumbs-o-up
+                = pluralize(@movie.get_upvotes.size, "Like")
+              = link_to dislike_movie_path(@movie), method: :get, class: "data" do
+                %i.fa.fa-thumbs-o-up
+                = pluralize(@movie.get_downvotes.size, "Disike")
+              %p.data
+                %i.fa.fa-comments-o
+                = pluralize(@movie.reviews.count, "Review")
+              - if @movie.creator == current_user
+                = link_to "Edit", edit_movie_path(@movie), class: "data"
+                = link_to "Delete", movie_path(@movie), method: :delete, data: { confirm: "Are you sure?" }, class: "data"
+        %br
+
 
         - if @reviews.blank?
           %h3 No reviews just yet, would you like to add the first!
           = link_to "Write Review", new_movie_review_path(@movie), class: "btn btn-danger"
         - else
-          %h3 Reviews(#{@reviews.count})
-          - @reviews.each do |review|
-            / %reviews
-            /   %span.star-rating{"data-score" => "#{review.rating}"}
-            /   %p= review.comment 
-            /   %p created by #{review.creator.full_name}
-            .table-responsive
-              %table.table
-              %tbody
-                %tr
-                  %td
-                    .star-rating{"data-score" => "#{review.rating}"}
-                    %p= review.comment 
-                    %p created by #{review.creator.full_name}
-              
+          %section.reviews
+            .row
+              .col-sm-10
+                = form_for([@movie, Review.new]) do |f|
+                  .form-group
+                    %label Rate this Movie
+                    .row
+                      .col-sm-6
+                        #star-rating
+                  .form-group
+                    %label Write Review
+                    .row
+                      .col-sm-8
+                        = f.text_area :comment, rows: 4, class: "span6"
+                  .actions
+                    %input(type="submit" value="Submit" class="btn btn-default")
+
+                - @reviews.each do |review|
+                  / %reviews
+                  /   %span.star-rating{"data-score" => "#{review.rating}"}
+                  /   %p= review.comment 
+                  /   %p created by #{review.creator.full_name}
+                  .table-responsive
+                    %table.table
+                    %tbody
+                      %tr
+                        %td
+                          .star-rating{"data-score" => "#{review.rating}"}
+                          %p= review.comment 
+                          %p created by #{review.creator.full_name}
+      
+        
 
 :javascript
   $('.star-rating').raty({
@@ -61,4 +85,10 @@
     score: function() {
       return $(this).attr('data-score')
     }
+  });
+
+  $('#star-rating').raty({
+    path: '/assets',
+    number: 10,
+    scoreName: 'review[rating]'
   });

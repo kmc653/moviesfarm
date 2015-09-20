@@ -1,7 +1,6 @@
 = form_tag sessions_path, class: 'sign_in' do
-  %header
-    %h1 Sign in
-  %fieldset
+  %h1 Sign in
+  .field
     = label_tag :email, "Email Address"
     .row
       .col-sm-4
@@ -11,6 +10,6 @@
       .col-sm-4
         = password_field_tag :password
   %br
-  %fieldset.form-group.action
+  .field
     %input(type="submit" value="Sign in" class="btn btn-default")
     = link_to "Forgot Password?"
